@@ -14,4 +14,6 @@ neko_mecab_df = pd.read_csv(MECAB_NEKO_PATH)
 print(neko_mecab_df["surface"].value_counts(ascending=False))
 
 # 頻度(base)
-print(neko_mecab_df["base"].value_counts(ascending=False))
+print(neko_mecab_df["base"].value_counts(ascending=False)
+
+# ↑ よくある助詞や記号系が上位を占めてしまっている。

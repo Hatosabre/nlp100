@@ -9,5 +9,6 @@ os.chdir(ROOT_PATH)
 MECAB_NEKO_PATH = "data/neko.txt.mecab"
 neko_mecab_df = pd.read_csv(MECAB_NEKO_PATH)
 
+# pos == "動詞"の 表層系(=surface)に絞り込み
 print(neko_mecab_df[neko_mecab_df["pos"] == "動詞"]["surface"].value_counts(ascending=False))
 
