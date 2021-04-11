@@ -55,29 +55,10 @@ for line in lines:
         chunk.update_morph(morph)
 
 for sent in sents:
-    for m in sent:
-        dst = m.dst
-        srcs = m.srcs
-
-        verb = None
-        for morph in m.morphs:
-            if morph.pos == "動詞":
-                verb = morph.base
-                break
-        if verb:
-            if dst != -1:
-                subs = []
-                for src in srcs:
-                    dstm = sent[src]
-                    for i in range(len(dstm.morphs)):
-                        ds = dstm.morphs[-1 - i]
-                        if ds.pos == "助詞":
-                            subs.append(ds.surface)
-                            break
-            print(verb + "\t" + " ".join(subs))
-
-
-                
-                
-
-  
+    for chunk in sent:
+        if '名詞' in [morph.pos for morph in chunk.morphs]:  # chunkが名詞を含むか確認
+            path = [''.join(morph.surface for morph in chunk.morphs if morph.pos != '記号')]
+            while chunk.dst != -1:  # 名詞を含むchunkを先頭に、dstを根まで順に辿ってリストに追加
+                path.append(''.join(morph.surface for morph in sent[chunk.dst].morphs if morph.pos != '記号'))
+                chunk = sent[chunk.dst]
+            print(' -> '.join(path))

@@ -71,10 +71,13 @@ for sent in sents:
                     dstm = sent[src]
                     for i in range(len(dstm.morphs)):
                         ds = dstm.morphs[-1 - i]
-                        if ds.pos == "助詞":
-                            subs.append(ds.surface)
-                            break
-            print(verb + "\t" + " ".join(subs))
+                        if (ds.pos == "助詞") & (ds.surface == "を"):
+                            ds_bef = dstm.morphs[-2 - i]
+                            if (ds_bef.pos1 == "サ変接続"):
+                                subs.append(ds_bef.surface + "を")
+                                break
+            if len(subs) > 0:
+                print(verb + "\t" + " ".join(subs))
 
 
                 
